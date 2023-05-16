@@ -39,6 +39,7 @@
   */
 int main(void)
 {
+	uint8_t data[2];
   /* config vector table offset */
   // nvic_vector_table_set(NVIC_VECTTAB_FLASH, 0x8000);
 
@@ -51,6 +52,13 @@ int main(void)
   //
   at32_led_on(LED4);
 
+  /*
+  data[0] = 0x0E;
+  write_EEPROM_DC(data, 1);
+
+  data[0] = 0x0F;
+  write_EEPROM_ADC(data, 1);
+  */
 
   while(1){
 	  printf("shining LED4\n");
@@ -59,10 +67,17 @@ int main(void)
 	  delay_sec(1);
 	  at32_led_on(LED4);
 
-	  update_eeprom_param();
+//	  update_eeprom_param();
+	  if(read_EEPROM_DC(data, 1) == 0){
+		  printf("read DC: %02X\n", data[0]);
+	  }
+	  if(read_EEPROM_ADC(data, 1) == 0){
+		  printf("read ADC: %02X\n", data[0]);
+	  }
+
   }
 
-//  update_eeprom_param();
+
 
   /* enter critical */
   taskENTER_CRITICAL();

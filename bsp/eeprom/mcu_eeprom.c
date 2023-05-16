@@ -39,3 +39,44 @@ void update_eeprom_param() {
 		printf("read 0x00: %02X\n", rx_buf1[0]);
 	}
 }
+int read_EEPROM(uint16_t addr, uint8_t *data, int len){
+	i2c_status_type i2c_status;
+	/* read data from memory device */
+	if ((i2c_status = i2c_memory_read(&hi2cx, I2C_MEM_ADDR_WIDIH_16,
+			EEPROM_ADDRESS, addr, data, len, I2C_TIMEOUT)) != I2C_OK) {
+		printf("write i2c eeprom failed. %d\r\n", i2c_status);
+		return -1;
+	}else{
+		return 0;
+	}
+}
+int write_EEPROM(uint16_t addr, uint8_t *data, int len){
+	i2c_status_type i2c_status;
+	/* write data to memory device */
+//	delay_ms(10);
+	i2c_status = i2c_memory_write(&hi2cx, I2C_MEM_ADDR_WIDIH_16,
+	    		EEPROM_ADDRESS, addr, data, len, I2C_TIMEOUT);
+
+	delay_ms(10);
+
+    if(i2c_status != I2C_OK)
+    {
+    	printf("write i2c eeprom failed. %d\r\n", i2c_status);
+    	return -1;
+    }else{
+    	printf("write i2c eeprom succeed: %d\r\n", data[0]);
+    	return 0;
+    }
+}
+int read_EEPROM_DC(uint8_t *data, int len){
+	return read_EEPROM(EEPROM_DC_ON, data, len);
+}
+int read_EEPROM_ADC(uint8_t *data, int len){
+	return read_EEPROM(EEPROM_ADC_ON, data, len);
+}
+int write_EEPROM_DC(uint8_t *data, int len){
+	return write_EEPROM(EEPROM_DC_ON, data, len);
+}
+int write_EEPROM_ADC(uint8_t *data, int len){
+	return write_EEPROM(EEPROM_ADC_ON, data, len);
+}

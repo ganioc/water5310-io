@@ -429,9 +429,18 @@ void set_rain_count(uint8_t channel, uint32_t count);
 //#define I2Cx_ERR_IRQn                    I2C1_ERR_IRQn
 
 
-
 void init_i2c_2();
 void update_eeprom_param();
+
+// EEPROM,
+// parameters to save in the EEPROM,
+#define EEPROM_DC_ON               0x0
+#define EEPROM_ADC_ON              0x1
+
+int read_EEPROM_DC(uint8_t *data, int len);
+int read_EEPROM_ADC(uint8_t *data, int len);
+int write_EEPROM_DC(uint8_t *data, int len);
+int write_EEPROM_ADC(uint8_t *data, int len);
 
 // D1 power
 
