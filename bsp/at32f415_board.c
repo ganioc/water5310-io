@@ -70,7 +70,7 @@ void at32_board_init()
 
 
 
-  /* init usart1 */
+  /* init usart3 PB10 */
   uart_print_init(115200);
 
   print_welcome();

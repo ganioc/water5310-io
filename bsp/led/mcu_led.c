@@ -52,7 +52,7 @@ void at32_led_on(led_type led)
   if(led > (LED_NUM - 1))
     return;
   if(led_gpio_pin[led])
-    led_gpio_port[led]->clr = led_gpio_pin[led];
+    led_gpio_port[led]->scr = led_gpio_pin[led];
 }
 
 /**
@@ -69,7 +69,7 @@ void at32_led_off(led_type led)
   if(led > (LED_NUM - 1))
     return;
   if(led_gpio_pin[led])
-    led_gpio_port[led]->scr = led_gpio_pin[led];
+    led_gpio_port[led]->clr = led_gpio_pin[led];
 }
 
 /**
