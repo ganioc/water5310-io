@@ -1,10 +1,26 @@
-/*
- * i2c_application.c
- *
- *  Created on: 2023 Feb 24
- *      Author: ruffman
- */
-
+/**
+  **************************************************************************
+  * @file     i2c_application.c
+  * @brief    the driver library of the i2c peripheral
+  **************************************************************************
+  *                       Copyright notice & Disclaimer
+  *
+  * The software Board Support Package (BSP) that is made available to
+  * download from Artery official website is the copyrighted work of Artery.
+  * Artery authorizes customers to use, copy, and distribute the BSP
+  * software and its related documentation for the purpose of design and
+  * development in conjunction with Artery microcontrollers. Use of the
+  * software is governed by this copyright notice and the following disclaimer.
+  *
+  * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  *
+  **************************************************************************
+  */
 
 #include "i2c_application.h"
 
@@ -282,8 +298,6 @@ i2c_status_type i2c_master_write_addr(i2c_handle_type *hi2c, uint16_t address, u
   {
     /* send slave address */
     i2c_7bit_address_send(hi2c->i2cx, address, I2C_DIRECTION_TRANSMIT);
-
-    printf("7bit address sent\r\n");
   }
   else
   {
@@ -301,8 +315,6 @@ i2c_status_type i2c_master_write_addr(i2c_handle_type *hi2c, uint16_t address, u
     /* send slave address */
     i2c_data_send(hi2c->i2cx, (uint8_t)(address & 0x00FF));
   }
-
-
 
   /* wait for the addr7 flag to be set */
   if(i2c_wait_flag(hi2c, I2C_ADDR7F_FLAG, I2C_EVENT_CHECK_ACKFAIL, timeout) != I2C_OK)
@@ -434,7 +446,6 @@ i2c_status_type i2c_master_transmit(i2c_handle_type* hi2c, uint16_t address, uin
   /* clear addr flag */
   i2c_flag_clear(hi2c->i2cx, I2C_ADDR7F_FLAG);
 
-
   while(size > 0)
   {
     /* wait for the tdbe flag to be set */
@@ -445,7 +456,6 @@ i2c_status_type i2c_master_transmit(i2c_handle_type* hi2c, uint16_t address, uin
 
       return I2C_ERR_STEP_3;
     }
-    printf("send data: %d\r\n",size);
 
     /* write data */
     i2c_data_send(hi2c->i2cx, (*pdata++));
@@ -1250,7 +1260,6 @@ i2c_status_type i2c_memory_address_send(i2c_handle_type* hi2c, i2c_mem_address_w
   }
   else
   {
-	  printf("send the 1st part addr\r\n");
     /* send memory address */
     i2c_data_send(hi2c->i2cx, (mem_address >> 8) & 0xFF);
 
@@ -1264,7 +1273,6 @@ i2c_status_type i2c_memory_address_send(i2c_handle_type* hi2c, i2c_mem_address_w
 
       return err_code;
     }
-    printf("send the other part\r\n");
 
     /* send memory address */
     i2c_data_send(hi2c->i2cx, mem_address & 0xFF);
@@ -1300,7 +1308,7 @@ i2c_status_type i2c_memory_write(i2c_handle_type* hi2c, i2c_mem_address_width_ty
   {
     return I2C_ERR_STEP_1;
   }
-  printf("wait for busy flag to be reset\r\n");
+
   /* ack acts on the current byte */
   i2c_master_receive_ack_set(hi2c->i2cx, I2C_MASTER_ACK_CURRENT);
 
@@ -1312,8 +1320,6 @@ i2c_status_type i2c_memory_write(i2c_handle_type* hi2c, i2c_mem_address_width_ty
 
     return I2C_ERR_STEP_2;
   }
-
-  printf("slave address sent\r\n");
 
   /* clear addr flag */
   i2c_flag_clear(hi2c->i2cx, I2C_ADDR7F_FLAG);
@@ -1380,24 +1386,17 @@ i2c_status_type i2c_memory_write(i2c_handle_type* hi2c, i2c_mem_address_width_ty
   */
 i2c_status_type i2c_memory_read(i2c_handle_type* hi2c, i2c_mem_address_width_type mem_address_width, uint16_t address, uint16_t mem_address, uint8_t* pdata, uint16_t size, uint32_t timeout)
 {
-  i2c_status_type i2c_status;
-
-
   /* initialization parameters */
   hi2c->pbuff = pdata;
   hi2c->pcount = size;
 
   hi2c->error_code = I2C_OK;
 
-  printf("check if i2c is busy?\r\n");
-
   /* wait for the busy flag to be reset */
   if(i2c_wait_flag(hi2c, I2C_BUSYF_FLAG, I2C_EVENT_CHECK_NONE, timeout) != I2C_OK)
   {
     return I2C_ERR_STEP_1;
   }
-
-  printf("i2c is not busy now\r\n");
 
   /* ack acts on the current byte */
   i2c_master_receive_ack_set(hi2c->i2cx, I2C_MASTER_ACK_CURRENT);
@@ -1406,17 +1405,13 @@ i2c_status_type i2c_memory_read(i2c_handle_type* hi2c, i2c_mem_address_width_typ
   i2c_ack_enable(hi2c->i2cx, TRUE);
 
   /* send slave address */
-  if((i2c_status = i2c_master_write_addr(hi2c, address, timeout)) != I2C_OK)
+  if(i2c_master_write_addr(hi2c, address, timeout) != I2C_OK)
   {
     /* generate stop condtion */
     i2c_stop_generate(hi2c->i2cx);
 
-    printf("i2c_status: %d\r\n", i2c_status);
-
     return I2C_ERR_STEP_2;
   }
-
-  printf("sent slave address\r\n");
 
   /* clear addr flag */
   i2c_flag_clear(hi2c->i2cx, I2C_ADDR7F_FLAG);
@@ -1430,18 +1425,11 @@ i2c_status_type i2c_memory_read(i2c_handle_type* hi2c, i2c_mem_address_width_typ
     return I2C_ERR_STEP_3;
   }
 
-  printf("wait tdbe flag sent\r\n");
-
-  // Add by Yango
-
-
   /* send memory address */
   if(i2c_memory_address_send(hi2c, mem_address_width, mem_address, timeout) != I2C_OK)
   {
     return I2C_ERR_STEP_4;
   }
-
-  printf("memory address sent\r\n");
 
   /* wait for the tdbe flag to be set */
   if(i2c_wait_flag(hi2c, I2C_TDBE_FLAG, I2C_EVENT_CHECK_ACKFAIL, timeout) != I2C_OK)
@@ -1451,8 +1439,6 @@ i2c_status_type i2c_memory_read(i2c_handle_type* hi2c, i2c_mem_address_width_typ
 
     return I2C_ERR_STEP_5;
   }
-
-  printf("wait tdbe flag sent\r\n");
 
   /* send slave address */
   if(i2c_master_read_addr(hi2c, address, timeout) != I2C_OK)
@@ -2429,4 +2415,3 @@ void i2c_err_irq_handler(i2c_handle_type* hi2c)
 /**
   * @}
   */
-

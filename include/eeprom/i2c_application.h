@@ -1,14 +1,30 @@
-/*
- * i2c_application.h
- *
- *  Created on: 2023 Feb 24
- *      Author: ruffman
- */
+/**
+  **************************************************************************
+  * @file     i2c_application.h
+  * @brief    i2c application libray header file
+  **************************************************************************
+  *                       Copyright notice & Disclaimer
+  *
+  * The software Board Support Package (BSP) that is made available to
+  * download from Artery official website is the copyrighted work of Artery.
+  * Artery authorizes customers to use, copy, and distribute the BSP
+  * software and its related documentation for the purpose of design and
+  * development in conjunction with Artery microcontrollers. Use of the
+  * software is governed by this copyright notice and the following disclaimer.
+  *
+  * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  *
+  **************************************************************************
+  */
 
-#ifndef INCLUDE_I2C_APPLICATION_H_
-#define INCLUDE_I2C_APPLICATION_H_
-
-
+/*!< define to prevent recursive inclusion -------------------------------------*/
+#ifndef __I2C_APPLICATION_H
+#define __I2C_APPLICATION_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,7 +32,6 @@ extern "C" {
 
 /* includes ------------------------------------------------------------------*/
 #include "at32f415.h"
-#include <stdio.h>
 
 /** @addtogroup AT32F415_middlewares_i2c_application_library
   * @{
@@ -173,5 +188,4 @@ void            i2c_dma_rx_irq_handler    (i2c_handle_type* hi2c);
 }
 #endif
 
-
-#endif /* INCLUDE_I2C_APPLICATION_H_ */
+#endif

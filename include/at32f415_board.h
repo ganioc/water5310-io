@@ -401,18 +401,19 @@ void set_rain_count(uint8_t channel, uint32_t count);
 //#define I2Cx_CLK                         CRM_I2C2_PERIPH_CLOCK
 
 #define I2C1_SCL_PIN                     GPIO_PINS_6
-#define I2C1_SCL_GPIO_PORT               GPIOB
-#define I2C1_SCL_GPIO_CLK                CRM_GPIOB_PERIPH_CLOCK
+#define I2C1_SCL_GPIO_PORT               GPIOF
+#define I2C1_SCL_GPIO_CLK                CRM_GPIOF_PERIPH_CLOCK
+#define I2C1_SCL_PIN_MUX_NUM             GPIO_MUX_2
 
 #define I2C1_SDA_PIN                     GPIO_PINS_7
-#define I2C1_SDA_GPIO_PORT               GPIOB
-#define I2C1_SDA_GPIO_CLK                CRM_GPIOB_PERIPH_CLOCK
+#define I2C1_SDA_GPIO_PORT               GPIOF
+#define I2C1_SDA_GPIO_CLK                CRM_GPIOF_PERIPH_CLOCK
 
 // #define I2Cx_SPEED                       100000
 #define I2C1_SPEED                       100000
 #define I2C1_ADDRESS                     0xA0
 #define EEPROM_ADDRESS                   0xA0
-#define C64_ADDRESS                      0xAE
+//#define C64_ADDRESS                      0xAE
 
 #define I2C1_PORT                        I2C1
 #define I2C1_CLK                         CRM_I2C1_PERIPH_CLOCK

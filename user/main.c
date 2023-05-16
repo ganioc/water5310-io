@@ -52,14 +52,16 @@ int main(void)
   at32_led_on(LED4);
 
 
-//  while(1){
-//	  printf("shining LED4\n");
-//	  delay_sec(1);
-//	  at32_led_off(LED4);
-//	  delay_sec(1);
-//	  at32_led_on(LED4);
-//  }
-//
+  while(1){
+	  printf("shining LED4\n");
+	  delay_sec(1);
+	  at32_led_off(LED4);
+	  delay_sec(1);
+	  at32_led_on(LED4);
+
+	  update_eeprom_param();
+  }
+
 //  update_eeprom_param();
 
   /* enter critical */
