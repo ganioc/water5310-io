@@ -52,14 +52,14 @@ int main(void)
   //
   at32_led_on(LED4);
 
-  /*
-  data[0] = 0x0E;
-  write_EEPROM_DC(data, 1);
+//
+//  data[0] = 0x0E;
+//  write_EEPROM_DC(data, 1);
+//
+//  data[0] = 0x0F;
+//  write_EEPROM_ADC(data, 1);
 
-  data[0] = 0x0F;
-  write_EEPROM_ADC(data, 1);
-  */
-
+/*
   while(1){
 	  printf("shining LED4\n");
 	  delay_sec(1);
@@ -77,7 +77,7 @@ int main(void)
 
   }
 
-
+*/
 
   /* enter critical */
   taskENTER_CRITICAL();
