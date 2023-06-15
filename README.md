@@ -23,4 +23,10 @@ Library: 从BSP library里面拷贝i2c_application.h|c 文件,
 设置Pin脚的MUX模式,
 
 
+### Firmware
+正常版本,
+
+OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table的位置, 偏移32KB,
+
+运行modi.sh, unmodi.sh进行修改和返回
 
