@@ -20,6 +20,6 @@ void init_pd0_5v_power_gpio(){
 			GPIO_PULL_DOWN
 	);
 
-	gpio_on(PD1_12V_POWER_GPIO_PORT,PD1_12V_POWER_PIN);
+	gpio_on(PD0_5V_POWER_GPIO_PORT,PD0_5V_POWER_PIN);
 }
 
