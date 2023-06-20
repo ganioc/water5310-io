@@ -358,7 +358,24 @@ void di_count_get(uint8_t channel, uint8_t*mode, uint16_t*count);
 #define DO_4_PORT        GPIOB
 #define DO_4_CRM_CLOCK   CRM_GPIOB_PERIPH_CLOCK
 
-#define DO_CHANNEL_NUM   4
+
+#define DO_5_PIN         GPIO_PINS_6
+#define DO_5_PORT        GPIOC
+#define DO_5_CRM_CLOCK   CRM_GPIOC_PERIPH_CLOCK
+
+#define DO_6_PIN         GPIO_PINS_7
+#define DO_6_PORT        GPIOC
+#define DO_6_CRM_CLOCK   CRM_GPIOC_PERIPH_CLOCK
+
+#define DO_7_PIN         GPIO_PINS_8
+#define DO_7_PORT        GPIOC
+#define DO_7_CRM_CLOCK   CRM_GPIOC_PERIPH_CLOCK
+
+#define DO_8_PIN         GPIO_PINS_9
+#define DO_8_PORT        GPIOC
+#define DO_8_CRM_CLOCK   CRM_GPIOC_PERIPH_CLOCK
+
+#define DO_CHANNEL_NUM   8
 
 
 void init_do_gpio();
