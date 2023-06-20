@@ -130,7 +130,40 @@ void di_count_set(uint8_t channel, uint16_t count){
 	di_chan[channel - 1].count = count;
 }
 void di_count_get(uint8_t channel, uint8_t* mode, uint16_t* count){
+	uint8_t state = 0;
 	*mode = (uint8_t)di_chan[channel - 1].mode;
-	*count = di_chan[channel - 1].count;
+
+	switch(channel){
+	case 1:
+		state = gpio_read(DI_1_PORT, DI_1_PIN);
+		break;
+	case 2:
+		state = gpio_read(DI_2_PORT, DI_2_PIN);
+		break;
+	case 3:
+		state = gpio_read(DI_3_PORT, DI_3_PIN);
+		break;
+	case 4:
+		state = gpio_read(DI_4_PORT, DI_4_PIN);
+		break;
+	case 5:
+		state = gpio_read(DI_5_PORT, DI_5_PIN);
+		break;
+	case 6:
+		state = gpio_read(DI_6_PORT, DI_6_PIN);
+		break;
+	case 7:
+		state = gpio_read(DI_7_PORT, DI_7_PIN);
+		break;
+	case 8:
+		state = gpio_read(DI_8_PORT, DI_8_PIN);
+		break;
+	default:
+		printf("wrong channel\r\n");
+		break;
+	}
+
+	di_chan[channel - 1].value = state;
+	*count = state;
 }
 

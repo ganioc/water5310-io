@@ -201,6 +201,7 @@ void init_gpio_input(
 void gpio_on(gpio_type* port, uint16_t pin);
 void gpio_off(gpio_type* port, uint16_t pin);
 void gpio_toggle(gpio_type* port, uint16_t pin);
+uint8_t gpio_read(gpio_type* port, uint16_t pin);
 
 
 /*  power control  */

@@ -57,3 +57,10 @@ void gpio_off(gpio_type* port, uint16_t pin){
 void gpio_toggle(gpio_type* port, uint16_t pin){
 	port->odt ^= pin;
 }
+uint8_t gpio_read(gpio_type* port, uint16_t pin){
+	if(gpio_input_data_bit_read(port, pin)== RESET){
+		return 0;
+	}else{
+		return 1;
+	}
+}
