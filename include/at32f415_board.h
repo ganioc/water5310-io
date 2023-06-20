@@ -450,6 +450,20 @@ int write_EEPROM_ADC(uint8_t *data, int len);
 
 void init_d1_power_gpio();
 
+// 12v power
+#define PD1_12V_POWER_PIN                GPIO_PINS_1
+#define PD1_12V_POWER_GPIO_PORT          GPIOD
+#define PD1_12V_POWER_GPIO_CLK           CRM_GPIOD_PERIPH_CLOCK
+
+void init_pd1_12v_power_gpio();
+
+// 5v power
+#define PD0_5V_POWER_PIN                GPIO_PINS_0
+#define PD0_5V_POWER_GPIO_PORT          GPIOD
+#define PD0_5V_POWER_GPIO_CLK           CRM_GPIOD_PERIPH_CLOCK
+
+void init_pd0_5v_power_gpio();
+
 // Watch Dog
 void init_wdt();
 void wdt_reload();

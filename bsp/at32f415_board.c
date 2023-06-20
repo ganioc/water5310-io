@@ -108,6 +108,10 @@ void at32_board_init()
 
   init_d1_power_gpio();
 
+  init_pd1_12v_power_gpio();
+
+  init_pd0_5v_power_gpio();
+
   init_wdt();
 
 }
