@@ -81,6 +81,30 @@ typedef enum
 #define LED4_GPIO_CRM_CLK                CRM_GPIOA_PERIPH_CLOCK
 #endif
 
+
+struct LED_STAUTS{
+	uint16_t mode; // 0:constant; 1:blink
+	uint16_t no;  // channel number
+	uint16_t onOff;
+	uint16_t onTime;
+	uint16_t offTime;
+	uint16_t repeatCnt;
+	uint16_t onTimeCounter;
+	uint16_t offTimeCounter;
+	uint16_t repeatCntCounter;// -1, for ever; 0, stop, same as constant, no need to use 'mode',
+	uint16_t state;
+};
+enum LED_TRANSFER_STATE{
+
+	LED_S_CONSTANT=0,
+	LED_S_START,
+	LED_S_ON,
+	LED_S_OFF
+};
+
+
+
+
 /**************** define print uart ******************/
 #define PRINT_UART                       USART3
 #define PRINT_UART_CRM_CLK               CRM_USART3_PERIPH_CLOCK
@@ -123,6 +147,7 @@ void at32_led_init(led_type led);
 void at32_led_on(led_type led);
 void at32_led_off(led_type led);
 void at32_led_toggle(led_type led);
+void at32_led_check_pattern(led_type led);
 
 /* button operation function */
 
@@ -155,6 +180,8 @@ struct BUTTON_EVENT_NAME{
 
 #define USER_BUTTON_CLICK_INTERVAL    150
 #define USER_BUTTON_LONG_INTERVAL     800
+
+#define BUTTON_TIMER_PERIDO           50
 
 enum BUTTON_STATE{
 	STATE_BUTTON_RELEASED = 0,

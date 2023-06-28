@@ -132,7 +132,9 @@ void TMR1_OVF_TMR10_IRQHandler(void)
     }
 
 
-    // at32_led_toggle(LED3);
+    at32_led_check_pattern(LED4);
+
+//    at32_led_toggle(LED4);
 
     switch(button_diagram_state){
     case STATE_BUTTON_RELEASED:

@@ -35,6 +35,10 @@ OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table�
 
 - channel 17, vref,
 - channel 16 , temp,
--
--
+- channel 0~7, ADC in
+- channel 8, VCC adc in
+
+### MCU timer
+50ms interrupt period, 20 Hz, 
+
 

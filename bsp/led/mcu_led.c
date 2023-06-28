@@ -14,6 +14,9 @@ uint16_t led_gpio_pin[LED_NUM]           = {LED2_PIN, LED3_PIN, LED4_PIN};
 crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_CRM_CLK, LED4_GPIO_CRM_CLK};
 
 
+
+static struct LED_STAUTS led_status[LED_NUM]={0};
+
 /**
   * @brief  configure led gpio
   * @param  led: specifies the led to be configured.
@@ -88,5 +91,102 @@ void at32_led_toggle(led_type led)
   if(led_gpio_pin[led])
     led_gpio_port[led]->odt ^= led_gpio_pin[led];
 }
+void at32_led_set_onoff_state(led_type led, uint16_t onOff){
+	struct LED_STAUTS *stat = &led_status[led];
 
+	stat->no = led;
+	stat->onOff = onOff;
+	stat->mode = 0;
+}
+void at32_led_set_onoff(led_type led, uint8_t onOff){
+	// if state is not
+	uint8_t state = gpio_read(led_gpio_port[led], led_gpio_pin[led]);
+
+	if(state != onOff){
+		if(onOff > 0){
+			at32_led_on(led);
+		}else{
+			at32_led_off(led);
+		}
+	}
+}
+uint8_t at32_led_get_onoff(led_type led){
+	return (uint8_t)led_status[led].onOff;
+}
+/*
+ * onTime : in ms
+ * offTime: in ms
+ * repeatCnt: -1, forever; >1,
+ */
+void at32_led_set_blink_state(led_type led,uint16_t onTime, uint16_t offTime, uint16_t repeatCnt){
+	struct LED_STAUTS *stat = &led_status[led];
+
+	if(repeatCnt <= 0 || onTime <= 0 || offTime <= 0){
+		at32_led_set_onoff(led, (uint8_t)0);
+	}else{
+		stat->repeatCnt = repeatCnt;
+		stat->onTime = ((onTime/BUTTON_TIMER_PERIDO) < 1)?1:(onTime/BUTTON_TIMER_PERIDO);
+		stat->offTime = ((offTime/BUTTON_TIMER_PERIDO) < 1)?1:(offTime/BUTTON_TIMER_PERIDO);
+
+		stat->repeatCntCounter = stat->repeatCnt;
+		stat->onTimeCounter = stat->onTime;
+		stat->offTimeCounter = stat->offTime;
+
+		stat->no = led;
+		stat->state = LED_S_START;
+		stat->mode = 1;
+	}
+
+}
+
+
+void at32_led_check_pattern(led_type led){
+	struct LED_STAUTS *stat = &led_status[led];
+	uint16_t mode = stat->mode;
+
+	if(mode == 0){
+		at32_led_set_onoff(led, stat->onOff);
+		return;
+	}
+
+	switch(stat->state){
+		LED_S_CONSTANT:
+		break;
+		LED_S_START:
+			at32_led_on(led);
+			stat->state = LED_S_ON;
+
+		break;
+		LED_S_ON:
+
+			stat->onTimeCounter--;
+			if(stat->onTimeCounter <=0){
+				at32_led_off(led);
+				stat->offTimeCounter = stat->offTime;
+				stat->state = LED_S_OFF;
+			}
+		break;
+		LED_S_OFF:
+			stat->offTimeCounter--;
+
+			if(stat->offTimeCounter <= 0){
+				if(stat->repeatCntCounter > 0){
+					stat->repeatCntCounter--;
+				}
+
+				if(stat->repeatCntCounter == 0){
+					stat->state = LED_S_CONSTANT;
+				}else {
+					stat->onTimeCounter = stat->onTime;
+					at32_led_on(led);
+					stat->state = LED_S_ON;
+				}
+			}
+		break;
+	default:
+
+		break;
+	}
+
+}
 

@@ -177,7 +177,23 @@ struct AT_CALLBACK at_cmd_list[] = {
 		read_cb: NULL,
 		write_cb: NULL,
 		exec_cb: cmd_cgsn
-	}
+	},
+	{
+		name: "IOLEDONOFF",
+		hash: 0,
+		test_cb: NULL,
+		read_cb: cmd_ioledonoff_read,
+		write_cb: cmd_ioledonoff_write,
+		exec_cb: NULL
+	},
+	{
+		name: "IOLEDBLINK",
+		hash: 0,
+		test_cb: NULL,
+		read_cb: cmd_ioledblink_read,
+		write_cb: cmd_ioledblink_write,
+		exec_cb: NULL
+		},
 };
 
 int NUM_AT_CALLBACK = sizeof(at_cmd_list)/sizeof(at_cmd_list[0]);

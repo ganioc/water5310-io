@@ -83,5 +83,11 @@ void cmd_iorainread_write(char*str , int len);
 // cgsn
 void cmd_cgsn();
 
+// LED
+void cmd_ioledonoff_write(char* str, int len);
+void cmd_ioledonoff_read();
+void cmd_ioledblink_write(char* str, int len);
+void cmd_ioledblink_read();
+
 
 #endif /* INCLUDE_AT_CMD_CMDS_CMDS_H_ */
