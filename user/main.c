@@ -49,9 +49,6 @@ int main(void)
 
   at32_board_init();
 
-  //
-  at32_led_on(LED4);
-
 //
 //  data[0] = 0x0E;
 //  write_EEPROM_DC(data, 1);

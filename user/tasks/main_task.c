@@ -17,7 +17,7 @@ void main_task_function(void *pvParameters)
   while(1)
   {
 
-    at32_led_toggle(LED4);
+    // at32_led_toggle(LED4);
     print_log("main task");
     vTaskDelay(5000);
   }

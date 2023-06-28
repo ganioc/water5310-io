@@ -82,7 +82,7 @@ void EXINT9_5_IRQHandler(void)
 		/* clear interrupt pending bit */
 		exint_flag_clear(EXINT_LINE_8);
 
-		at32_led_toggle(LED4);
+		// at32_led_toggle(LED4);
 
 		// rain_count++;
 		if(raindrop_state == RAIN_STATE_DUMMY){
