@@ -28,6 +28,10 @@ uint16_t        click_num              = 0;
 static  char    str_temp[32];
 
 
+extern struct LED_STAUTS led_status[LED_NUM];
+struct LED_STAUTS *stat = &led_status[LED4];
+
+
 enum RAINDROP_STATE  raindrop_state  = RAIN_STATE_DUMMY;
 
 
@@ -132,7 +136,7 @@ void TMR1_OVF_TMR10_IRQHandler(void)
     }
 
 
-    at32_led_check_pattern(LED4);
+//    at32_led_check_pattern(LED4);
 
 //    at32_led_toggle(LED4);
 
@@ -218,6 +222,51 @@ void TMR1_OVF_TMR10_IRQHandler(void)
 
     	break;
     }
+
+    // for LED pattern shining and control
+	if(stat->mode == 0){
+		at32_led_set_onoff(LED4, stat->onOff);
+	}else{
+
+		switch(stat->state){
+		case	LED_S_CONSTANT:
+			break;
+		case	LED_S_START:
+				at32_led_on(LED4);
+				stat->state = LED_S_ON;
+
+			break;
+		case	LED_S_ON:
+				stat->onTimeCounter--;
+				if(stat->onTimeCounter <=0){
+					at32_led_off(LED4);
+					stat->offTimeCounter = stat->offTime;
+					stat->state = LED_S_OFF;
+				}
+			break;
+		case	LED_S_OFF:
+				stat->offTimeCounter--;
+
+				if(stat->offTimeCounter <= 0){
+					if(stat->repeatCntCounter > 0){
+						stat->repeatCntCounter--;
+					}
+
+					if(stat->repeatCntCounter == 0){
+						stat->state = LED_S_CONSTANT;
+					}else {
+						stat->onTimeCounter = stat->onTime;
+						at32_led_on(LED4);
+						stat->state = LED_S_ON;
+					}
+				}
+			break;
+		default:
+
+			break;
+		}
+	}
+
   }
 }
 

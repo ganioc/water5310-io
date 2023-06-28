@@ -15,7 +15,7 @@ crm_periph_clock_type led_gpio_crm_clk[LED_NUM] = {LED2_GPIO_CRM_CLK, LED3_GPIO_
 
 
 
-static struct LED_STAUTS led_status[LED_NUM]={0};
+struct LED_STAUTS led_status[LED_NUM]={0};
 
 /**
   * @brief  configure led gpio
@@ -121,10 +121,11 @@ uint8_t at32_led_get_onoff(led_type led){
 void at32_led_set_blink_state(led_type led,uint16_t onTime, uint16_t offTime, uint16_t repeatCnt){
 	struct LED_STAUTS *stat = &led_status[led];
 
-	if(repeatCnt <= 0 || onTime <= 0 || offTime <= 0){
+	if(onTime <= 0 || offTime <= 0){
 		at32_led_set_onoff(led, (uint8_t)0);
 	}else{
-		stat->repeatCnt = repeatCnt;
+
+		stat->repeatCnt = (repeatCnt == 0)? -1: repeatCnt;
 		stat->onTime = ((onTime/BUTTON_TIMER_PERIDO) < 1)?1:(onTime/BUTTON_TIMER_PERIDO);
 		stat->offTime = ((offTime/BUTTON_TIMER_PERIDO) < 1)?1:(offTime/BUTTON_TIMER_PERIDO);
 
@@ -138,16 +139,19 @@ void at32_led_set_blink_state(led_type led,uint16_t onTime, uint16_t offTime, ui
 	}
 
 }
-
+struct LED_STAUTS at32_led_get_status(led_type led){
+	return led_status[led];
+}
 
 void at32_led_check_pattern(led_type led){
 	struct LED_STAUTS *stat = &led_status[led];
-	uint16_t mode = stat->mode;
 
-	if(mode == 0){
+
+	if(stat->mode == 0){
 		at32_led_set_onoff(led, stat->onOff);
 		return;
 	}
+
 
 	switch(stat->state){
 		LED_S_CONSTANT:

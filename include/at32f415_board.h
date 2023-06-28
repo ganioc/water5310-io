@@ -88,7 +88,7 @@ struct LED_STAUTS{
 	uint16_t onOff;
 	uint16_t onTime;
 	uint16_t offTime;
-	uint16_t repeatCnt;
+	int16_t repeatCnt;
 	uint16_t onTimeCounter;
 	uint16_t offTimeCounter;
 	uint16_t repeatCntCounter;// -1, for ever; 0, stop, same as constant, no need to use 'mode',
@@ -102,8 +102,8 @@ enum LED_TRANSFER_STATE{
 	LED_S_OFF
 };
 
-
-
+struct LED_STAUTS at32_led_get_status(led_type led);
+void at32_led_set_blink_state(led_type led,uint16_t onTime, uint16_t offTime, uint16_t repeatCnt);
 
 /**************** define print uart ******************/
 #define PRINT_UART                       USART3
