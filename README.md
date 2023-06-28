@@ -30,3 +30,11 @@ OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table�
 
 运行modi.sh, unmodi.sh进行修改和返回
 
+### About ADC,
+共测试10个channel, 分别为:
+
+- channel 17, vref,
+- channel 16 , temp,
+-
+-
+

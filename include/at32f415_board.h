@@ -285,7 +285,7 @@ void adc_mode_set(uint8_t channel, uint8_t mode);
 uint8_t adc_mode_get(uint8_t channel);
 void init_adc();
 void adc_get(uint8_t channel, uint16_t * v_ref, uint16_t *val);
-
+enum ADC_MODE adc_get_mode(uint8_t channel);
 void cmd_invol_read();
 
 // DI

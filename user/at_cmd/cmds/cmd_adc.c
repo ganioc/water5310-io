@@ -68,7 +68,19 @@ void cmd_ioadcmode_read() {
 	}
 	send_response_ok();
 }
+static float compute_val(uint8_t mode, uint16_t vref, uint16_t val){
+	// ((float)1.2 * 4095 * val)/(vref*4096)
+	float mVref = ((float) 1.2 * 4095) / vref;
+	float v_coef = 2.0;
+	float v_compu = (float)mVref * val / 4096;
 
+	if(mode == 0){ // voltage
+		return v_coef * v_compu;
+	}else{ // current
+		return v_compu*2.0/249.0;
+	}
+
+}
 void cmd_ioadcread_write(char *str, int len) {
 	uint16_t vref, val;
 	uint8_t channel, mode;
@@ -91,7 +103,7 @@ void cmd_ioadcread_write(char *str, int len) {
 		sprintf(temp, "+IOADCREAD:%d,%d,%0.3f,%d",
 				channel,
 				mode,
-				((float)1.2 * 4095 * val)/(vref*4096),
+				compute_val(mode, vref, val),
 				val);
 
 		send_response_str(temp);
