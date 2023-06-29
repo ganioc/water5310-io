@@ -22,7 +22,7 @@ void  cmd_iodo_write(char* str, int len){
 	temp[1] = 0;
 	onoff = atoi(temp);
 
-	if(channel < 1 || channel > DO_CHANNEL_NUM){
+	if(channel < 0 || channel > DO_CHANNEL_NUM){
 		send_response_error(AT_ERROR_PARAMETER);
 	}else{
 		do_ctrl(channel, onoff);
