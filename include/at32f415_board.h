@@ -281,6 +281,8 @@ uint8_t RS232_RS485_get_gpio_status(uint8_t channel);
 
 void init_relay_gpio();
 void relay_ctrl(uint8_t channel, uint8_t onoff);
+uint8_t relay_ctrl_get_status(uint8_t channel);
+
 
 // ADC
 #define ADC_POWER_PIN          GPIO_PINS_1

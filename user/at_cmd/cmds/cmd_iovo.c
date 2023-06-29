@@ -13,16 +13,16 @@ void cmd_iovo_read(){
 	print_log("read vo mode");
 	char temp [20];
 
-	sprintf(temp, "+IODIMODE:%d,%d",
+	sprintf(temp, "+IOVO:%d,%d",
 					1,
-					di_mode_get(1)
+					RS232_RS485_get_gpio_status(1)
 					);
 	send_response_str(temp);
 
-	for(int i = 2; i <= 8; i++){
-		sprintf(temp, "+IODIMODE:%d,%d\r\n",
+	for(int i = 2; i <= 5; i++){
+		sprintf(temp, "+IOVO:%d,%d\r\n",
 				i,
-				di_mode_get(i)
+				RS232_RS485_get_gpio_status(i)
 				);
 		send_response_str_raw(temp);
 	}

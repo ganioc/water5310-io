@@ -31,4 +31,28 @@ void cmd_iorly_write(char* str, int len){
 		send_response_ok();
 	}
 }
+void cmd_iorly_read(){
+	uint16_t vref, val;
+	uint8_t channel, mode;
+
+	char temp[20];
+
+	print_log("read iorly");
+
+	sprintf(temp, "+IORLY:%d,%d",
+					1,
+					relay_ctrl_get_status(1)
+					);
+	send_response_str(temp);
+
+	for(int i = 2; i <= 4; i++){
+		sprintf(temp, "+IORLY:%d,%d\r\n",
+				i,
+				relay_ctrl_get_status(i)
+				);
+		send_response_str_raw(temp);
+	}
+
+	send_response_ok();
+}
 

@@ -41,4 +41,8 @@ OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table�
 ### MCU timer
 50ms interrupt period, 20 Hz, 
 
+### power IO control
+
+
+
 

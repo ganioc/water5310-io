@@ -19,6 +19,8 @@ static uint16_t relay_gpio_pin[] = {
 		RELAY_4_PIN
 };
 
+uint16_t relay_gpio_status[4] = {0};
+
 void init_relay_gpio(){
 	init_gpio_output(
 			RELAY_1_CRM_CLOCK,
@@ -54,9 +56,11 @@ static void relay_ctrl_all(uint8_t onoff){
 		if(onoff){
 			gpio_on(relay_gpio_port[i],
 					relay_gpio_pin[i]);
+			relay_gpio_status[i] = 1;
 		}else{
 			gpio_off(relay_gpio_port[i],
 					relay_gpio_pin[i]);
+			relay_gpio_status[i] = 0;
 		}
 	}
 }
@@ -68,8 +72,13 @@ void relay_ctrl(uint8_t channel, uint8_t onoff){
 	if(onoff){
 		gpio_on(relay_gpio_port[channel - 1],
 				relay_gpio_pin[channel - 1]);
+		relay_gpio_status[channel - 1] = 1;
 	}else{
 		gpio_off(relay_gpio_port[channel - 1],
 				relay_gpio_pin[channel - 1]);
+		relay_gpio_status[channel - 1] = 0;
 	}
+}
+uint8_t relay_ctrl_get_status(uint8_t channel){
+	return relay_gpio_status[channel - 1];
 }

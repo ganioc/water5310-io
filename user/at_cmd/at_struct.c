@@ -40,7 +40,7 @@ void init_at_callback(){
 		at_cmd_list[i].hash = makeHash(at_cmd_list[i].name);
 	}
 
-	// check duplicate names£¿
+	// check duplicate namesï¿½ï¿½
 	for(int i =0; i< NUM_AT_CALLBACK; i++){
 		for(int j=0; j<NUM_AT_CALLBACK; j++){
 			if(i != j && at_cmd_list[i].hash == at_cmd_list[j].hash){
@@ -79,19 +79,21 @@ void handle_at_cmd(struct AT_CMD cmd){
 		send_response_error(AT_ERROR_POSITION);
 		break;
 	case _AT_TEST:
-		cb->test_cb();
+
+		(cb->test_cb == NULL)?(send_response_error(AT_ERROR_UNKNOWN)):cb->test_cb();
+
 		break;
 	case _AT_SET:
-		cb->write_cb(cmd.args, strlen(cmd.args));
+		(cb->write_cb != NULL)?(cb->write_cb(cmd.args, strlen(cmd.args))):(send_response_error(AT_ERROR_UNKNOWN));
 		break;
 	case _AT_GET:
-		cb->read_cb();
+		(cb->read_cb != NULL)?(cb->read_cb()):(send_response_error(AT_ERROR_UNKNOWN));
 		break;
 	case _AT_URC:
 		send_response_error(AT_ERROR_POSITION);
 		break;
 	case _AT_EXEC:
-		cb->exec_cb();
+		(cb->exec_cb != NULL)?(cb->exec_cb()):(send_response_error(AT_ERROR_UNKNOWN));
 		break;
 	default:
 		send_response_error(AT_ERROR_POSITION);

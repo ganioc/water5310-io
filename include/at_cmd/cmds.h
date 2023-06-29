@@ -19,7 +19,7 @@
 #define AT_ERROR_POSITION   "100"
 #define AT_ERROR_PARAMETER  "101"
 #define AT_ERROR_EXEC       "102"
-
+#define AT_ERROR_UNKNOWN    "103"
 
 // AT
 void cmd_at_exec(void);
@@ -51,6 +51,7 @@ void cmd_iovo_read();
 
 // IORLY
 void cmd_iorly_write(char* str, int len);
+void cmd_iorly_read();
 
 // ADC
 void cmd_ioadcpwr_write(char* str, int len);

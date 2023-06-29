@@ -62,7 +62,7 @@ struct AT_CALLBACK at_cmd_list[] = {
 		name: "IORLY",
 		hash: 0,
 		test_cb: NULL,
-		read_cb: NULL,
+		read_cb: cmd_iorly_read,
 		write_cb: cmd_iorly_write,
 		exec_cb: NULL
 	},
