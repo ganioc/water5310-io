@@ -49,7 +49,22 @@ void init_relay_gpio(){
 	gpio_off(RELAY_3_PORT,RELAY_3_PIN);
 	gpio_off(RELAY_4_PORT,RELAY_4_PIN);
 }
+static relay_ctrl_all(uint8_t onoff){
+	for(int i = 0; i< 4; i++){
+		if(onoff){
+			gpio_on(relay_gpio_port[i],
+					relay_gpio_pin[i]);
+		}else{
+			gpio_off(relay_gpio_port[i],
+					relay_gpio_pin[i]);
+		}
+	}
+}
 void relay_ctrl(uint8_t channel, uint8_t onoff){
+	if(channel == 0){
+		relay_ctrl_all(onoff);
+		return;
+	}
 	if(onoff){
 		gpio_on(relay_gpio_port[channel - 1],
 				relay_gpio_pin[channel - 1]);

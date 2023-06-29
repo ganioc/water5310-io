@@ -22,7 +22,7 @@ void cmd_iorly_write(char* str, int len){
 
 	print_log(str);
 	if( relay_channel > 4 ||
-			relay_channel < 1 ||
+			relay_channel < 0 ||
 			onoff > 1 ||
 			onoff < 0){
 		send_response_error(AT_ERROR_PARAMETER);
