@@ -47,6 +47,7 @@ void cmd_restore_exec();
 
 // IOVO
 void cmd_iovo_write(char* str, int len);
+void cmd_iovo_read();
 
 // IORLY
 void cmd_iorly_write(char* str, int len);

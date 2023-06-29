@@ -104,6 +104,9 @@ enum LED_TRANSFER_STATE{
 
 struct LED_STAUTS at32_led_get_status(led_type led);
 void at32_led_set_blink_state(led_type led,uint16_t onTime, uint16_t offTime, uint16_t repeatCnt);
+void at32_led_set_onoff(led_type led, uint8_t onOff);
+uint8_t at32_led_get_onoff(led_type led);
+void at32_led_set_onoff_state(led_type led, uint16_t onOff);
 
 /**************** define print uart ******************/
 #define PRINT_UART                       USART3
@@ -232,25 +235,32 @@ uint8_t gpio_read(gpio_type* port, uint16_t pin);
 
 
 /*  power control  */
-#define RS232_1_POWER_PIN       GPIO_PINS_4
+enum PWR_CTRL_NUM {
+	PWR_CTRL_ADC=1,
+	PWR_CTRL_SDI,
+	PWR_CTRL_485,
+	PWR_CTRL_232,
+	PWR_CTRL_VCCOUT
+};
+#define VCCOUT_1_POWER_PIN       GPIO_PINS_4
+#define VCCOUT_1_POWER_PORT      GPIOF
+#define VCCOUT_1_POWER_CRM_CLOCK CRM_GPIOF_PERIPH_CLOCK
+
+#define SDI_1_POWER_PIN       GPIO_PINS_5
+#define SDI_1_POWER_PORT      GPIOC
+#define SDI_1_POWER_CRM_CLOCK CRM_GPIOC_PERIPH_CLOCK
+
+#define RS232_1_POWER_PIN       GPIO_PINS_5
 #define RS232_1_POWER_PORT      GPIOF
 #define RS232_1_POWER_CRM_CLOCK CRM_GPIOF_PERIPH_CLOCK
 
 #define RS485_1_POWER_PIN       GPIO_PINS_4
-#define RS485_1_POWER_PORT      GPIOF
-#define RS485_1_POWER_CRM_CLOCK CRM_GPIOF_PERIPH_CLOCK
-
-#define RS232_2_POWER_PIN       GPIO_PINS_5
-#define RS232_2_POWER_PORT      GPIOF
-#define RS232_2_POWER_CRM_CLOCK CRM_GPIOF_PERIPH_CLOCK
-
-#define RS485_2_POWER_PIN       GPIO_PINS_4
-#define RS485_2_POWER_PORT      GPIOC
-#define RS485_2_POWER_CRM_CLOCK CRM_GPIOC_PERIPH_CLOCK
+#define RS485_1_POWER_PORT      GPIOC
+#define RS485_1_POWER_CRM_CLOCK CRM_GPIOC_PERIPH_CLOCK
 
 void init_RS232_RS485_pwr_gpio();
 void RS232_RS485_pwr_ctrl(uint8_t channel, uint8_t onoff);
-
+uint8_t RS232_RS485_get_gpio_status(uint8_t channel);
 
 // RELAY
 #define RELAY_1_PIN         GPIO_PINS_0

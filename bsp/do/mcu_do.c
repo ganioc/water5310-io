@@ -86,7 +86,7 @@ void init_do_gpio(){
 	gpio_off(DO_8_PORT,DO_8_PIN);
 }
 
-static do_ctrl_all(uint8_t onoff){
+static void do_ctrl_all(uint8_t onoff){
 	for(int i = 0; i < 8; i++){
 		if(onoff){
 			gpio_on(do_gpio_port[i], do_gpio_pin[i]);

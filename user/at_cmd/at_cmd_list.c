@@ -54,7 +54,7 @@ struct AT_CALLBACK at_cmd_list[] = {
 		name:     "IOVO",
 		hash:     0,
 		test_cb:  NULL,
-		read_cb:  NULL,
+		read_cb:  cmd_iovo_read,
 		write_cb: cmd_iovo_write,
 		exec_cb:  NULL
 	},

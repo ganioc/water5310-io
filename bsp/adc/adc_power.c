@@ -9,31 +9,24 @@
 
 
 void init_adc_power_gpio(){
-	init_gpio_output(
-	ADC_POWER_CRM_CLOCK,
-	ADC_POWER_PORT,
-	ADC_POWER_PIN,
-	GPIO_PULL_DOWN
-	);
-	gpio_off(ADC_POWER_PORT,
-			ADC_POWER_PIN);
+//	init_gpio_output(
+//	ADC_POWER_CRM_CLOCK,
+//	ADC_POWER_PORT,
+//	ADC_POWER_PIN,
+//	GPIO_PULL_DOWN
+//	);
+//	gpio_off(ADC_POWER_PORT,
+//			ADC_POWER_PIN);
 }
 
-void enable_adc_power(){
-	gpio_on(ADC_POWER_PORT,
-				ADC_POWER_PIN);
-}
-void disable_adc_power(){
-	gpio_off(ADC_POWER_PORT,
-				ADC_POWER_PIN);
-}
 
 void adc_power_ctrl(uint8_t onoff){
-	if(onoff){
-		enable_adc_power();
-	}else{
-		disable_adc_power();
-	}
+//	if(onoff){
+//		enable_adc_power();
+//	}else{
+//		disable_adc_power();
+//	}
+	RS232_RS485_pwr_ctrl(PWR_CTRL_ADC, onoff);
 }
 
 
