@@ -26,6 +26,7 @@ static uint16_t do_gpio_pin[] = {
 		DO_7_PIN,
 		DO_8_PIN
 };
+static uint16_t do_gpio_status[8] = {0};
 
 void init_do_gpio(){
 	init_gpio_output(
@@ -90,8 +91,10 @@ static void do_ctrl_all(uint8_t onoff){
 	for(int i = 0; i < 8; i++){
 		if(onoff){
 			gpio_on(do_gpio_port[i], do_gpio_pin[i]);
+			do_gpio_status[i] = 1;
 		}else{
 			gpio_off(do_gpio_port[i], do_gpio_pin[i]);
+			do_gpio_status[i] = 0;
 		}
 	}
 }
@@ -104,7 +107,12 @@ void do_ctrl(uint8_t channel, uint8_t onoff){
 
 	if(onoff){
 		gpio_on(do_gpio_port[channel - 1], do_gpio_pin[channel - 1]);
+		do_gpio_status[channel -1] = 1;
 	}else{
 		gpio_off(do_gpio_port[channel - 1], do_gpio_pin[channel - 1]);
+		do_gpio_status[channel - 1] = 0;
 	}
+}
+uint8_t do_ctrl_get_status(uint8_t channel){
+	return do_gpio_status[channel - 1];
 }

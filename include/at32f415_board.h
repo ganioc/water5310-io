@@ -419,6 +419,7 @@ void di_count_get(uint8_t channel, uint8_t*mode, uint16_t*count);
 
 void init_do_gpio();
 void do_ctrl(uint8_t channel, uint8_t onoff);
+uint8_t do_ctrl_get_status(uint8_t channel);
 
 // RAIN SENSOR
 #define RAIN_PIN         GPIO_PINS_8

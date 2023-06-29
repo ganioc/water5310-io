@@ -69,6 +69,7 @@ void cmd_iodiread_write(char* str, int len);
 
 // DO
 void  cmd_iodo_write(char* str, int len);
+void cmd_iodo_read();
 
 // BTN
 void cmd_iobtnsub_read();

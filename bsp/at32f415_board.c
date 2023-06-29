@@ -40,9 +40,9 @@
 
 
 
-char version[]="1.0.2";
+char version[]="1.0.3";
 char model[] = "IOEXT_AT32F415";
-char date[] = "2023.02.10";
+char date[] = "2023.06.29";
 
 void print_welcome(){
 	printf("%s, Firmware v%s\r\n", model, version);

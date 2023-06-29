@@ -7,6 +7,26 @@
 #include "cmds.h"
 #include <stdlib.h>
 
+void cmd_iodo_read(){
+	print_log("read do mode");
+	char temp [20];
+
+	sprintf(temp, "+IODO:%d,%d",
+					1,
+					do_ctrl_get_status(1)
+					);
+	send_response_str(temp);
+
+	for(int i = 2; i <= 8; i++){
+		sprintf(temp, "+IODO:%d,%d\r\n",
+				i,
+				do_ctrl_get_status(i)
+				);
+		send_response_str_raw(temp);
+	}
+
+	send_response_ok();
+}
 
 void  cmd_iodo_write(char* str, int len){
 	char temp[3];

@@ -118,7 +118,7 @@ struct AT_CALLBACK at_cmd_list[] = {
 		name: "IODO",
 		hash: 0,
 		test_cb: NULL,
-		read_cb: NULL,
+		read_cb: cmd_iodo_read,
 		write_cb: cmd_iodo_write,
 		exec_cb: NULL
 	},
