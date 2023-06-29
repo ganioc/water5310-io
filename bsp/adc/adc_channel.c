@@ -6,7 +6,7 @@
  */
 #include "at32f415_board.h"
 
-#define ADC_REPEAT_TIMES    10
+#define ADC_REPEAT_TIMES    100
 
 #define ADC_MEASURE_NUM     10
 
@@ -143,11 +143,11 @@ static void adc_repeat_read() {
 	}
 
 	for (int i = 0; i < ADC_MEASURE_NUM; i++) {
-		uint16_t sum = 0;
+		uint32_t sum = 0;
 		for (int j = 0; j < ADC_REPEAT_TIMES; j++) {
 			sum += adc1_repeated_values[j][i];
 		}
-		adc1_ordinary_value[i] = sum / ADC_MEASURE_NUM;
+		adc1_ordinary_value[i] = (uint16_t )(sum / ADC_REPEAT_TIMES);
 	}
 }
 /*
