@@ -44,5 +44,8 @@ OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table�
 ### power IO control
 
 
+### watchdog
+待查,
+
 
 

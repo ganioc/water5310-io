@@ -6,7 +6,7 @@
  */
 #include "at32f415_board.h"
 
-#define ADC_REPEAT_TIMES    200
+#define ADC_REPEAT_TIMES    100
 
 #define ADC_MEASURE_NUM     10
 

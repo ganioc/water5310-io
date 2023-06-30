@@ -88,11 +88,30 @@ void cmd_iodiread_write(char* str, int len){
 
 	print_log(str);
 
-	di_count_get(channel, &mode, &count );
-	sprintf(temp, "+IODIREAD:%d,%d,%d",channel,mode, count);
+	if(channel < 0 || channel > 8){
+		send_response_error(AT_ERROR_PARAMETER);
+	}
+	else if(channel == 0){
+		di_count_get(1, &mode, &count );
+		sprintf(temp, "+IODIREAD:%d,%d,%d",1,mode, count);
+		send_response_str(temp);
 
-	send_response_str(temp);
+		for(int i = 2; i<= 8; i++){
+			di_count_get(i, &mode, &count );
+			sprintf(temp, "+IODIREAD:%d,%d,%d\r\n",i,mode, count);
+			send_response_str_raw(temp);
+		}
+		send_response_ok();
 
-	send_response_ok();
+	}else{
+		di_count_get(channel, &mode, &count );
+		sprintf(temp, "+IODIREAD:%d,%d,%d",channel,mode, count);
+
+		send_response_str(temp);
+
+		send_response_ok();
+	}
+
+
 }
 

@@ -84,7 +84,7 @@ static float compute_val(uint8_t mode, uint16_t vref, uint16_t val){
 void cmd_ioadcread_write(char *str, int len) {
 	uint16_t vref, val;
 	uint8_t channel, mode;
-	char temp[32];
+	char temp[36];
 
 	print_log(str);
 
@@ -92,8 +92,37 @@ void cmd_ioadcread_write(char *str, int len) {
 	temp[1] = 0;
 	channel = atoi(temp);
 
-	if(channel < 1 || channel > 8){
+	if(channel < 0 || channel > 8){
 		send_response_error(AT_ERROR_PARAMETER);
+	}else if(channel == 0){
+		// get channel1
+		mode = adc_mode_get(1);
+		adc_get(1, &vref, &val);
+
+		sprintf(temp, "+IOADCREAD:%d,%d,%0.3f,%d",
+						1,
+						mode,
+						compute_val(mode, vref, val),
+						val);
+
+		send_response_str(temp);
+
+		// get channel 2~8
+		for(int i = 2; i <= 8 ; i++){
+			mode = adc_mode_get(i);
+			adc_get(i, &vref, &val);
+
+			sprintf(temp, "+IOADCREAD:%d,%d,%0.3f,%d\r\n",
+							i,
+							mode,
+							compute_val(mode, vref, val),
+							val);
+
+			send_response_str_raw(temp);
+		}
+
+		send_response_ok();
+
 	}else{
 		mode = adc_mode_get(channel);
 		adc_get(channel, &vref, &val);
