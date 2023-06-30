@@ -45,11 +45,11 @@ void init_rain_gpio(){
 			RAIN_PIN,
 			GPIO_PULL_UP);
 
-//	init_gpio_input(
-//			RAIN_PULSE_CRM_CLOCK,
-//			RAIN_PULSE_PORT,
-//			RAIN_PULSE_PIN,
-//			GPIO_PULL_UP);
+	init_gpio_input(
+			RAIN_PULSE_CRM_CLOCK,
+			RAIN_PULSE_PORT,
+			RAIN_PULSE_PIN,
+			GPIO_PULL_UP);
 }
 
 void init_rain_exint(){

@@ -45,7 +45,7 @@ OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table�
 
 
 ### watchdog
-待查,
+待查, 20S
 
-
+###
 

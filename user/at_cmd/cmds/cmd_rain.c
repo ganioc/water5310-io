@@ -33,7 +33,7 @@ void cmd_iorainmode_write(char*str , int len){
 
 	print_log(str);
 
-	if(mode < 0 || mode > 1){
+	if(mode < 0 || mode > 2){
 		send_response_error(AT_ERROR_PARAMETER);
 	}else{
 		set_rain_mode(channel, mode);
