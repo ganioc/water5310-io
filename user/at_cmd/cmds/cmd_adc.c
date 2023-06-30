@@ -8,6 +8,8 @@
 #include "cmds.h"
 #include <stdlib.h>
 
+extern uint16_t adc1_ordinary_value[ADC_MEASURE_NUM];
+
 void cmd_ioadcpwr_write(char *str, int len) {
 	char temp[2];
 	uint8_t onoff;
@@ -95,9 +97,15 @@ void cmd_ioadcread_write(char *str, int len) {
 	if(channel < 0 || channel > 8){
 		send_response_error(AT_ERROR_PARAMETER);
 	}else if(channel == 0){
+
+		adc_repeat_read();
+
+		vref=adc1_ordinary_value[0];
+
 		// get channel1
 		mode = adc_mode_get(1);
-		adc_get(1, &vref, &val);
+		val = adc1_ordinary_value[1];
+		// adc_get(1, &vref, &val);
 
 		sprintf(temp, "+IOADCREAD:%d,%d,%0.3f,%d",
 						1,
@@ -110,7 +118,8 @@ void cmd_ioadcread_write(char *str, int len) {
 		// get channel 2~8
 		for(int i = 2; i <= 8 ; i++){
 			mode = adc_mode_get(i);
-			adc_get(i, &vref, &val);
+			// adc_get(i, &vref, &val);
+			val = adc1_ordinary_value[i];
 
 			sprintf(temp, "+IOADCREAD:%d,%d,%0.3f,%d\r\n",
 							i,
@@ -119,6 +128,9 @@ void cmd_ioadcread_write(char *str, int len) {
 							val);
 
 			send_response_str_raw(temp);
+
+			// delay some time
+			// vTaskDelay(10);
 		}
 
 		send_response_ok();

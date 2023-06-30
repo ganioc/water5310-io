@@ -6,9 +6,7 @@
  */
 #include "at32f415_board.h"
 
-#define ADC_REPEAT_TIMES    100
 
-#define ADC_MEASURE_NUM     10
 
 #define CHANNEL_IOVOL       9
 #define CHANNEL_VERF        0
@@ -126,7 +124,7 @@ void init_adc() {
 	adc_config();
 
 }
-static void adc_repeat_read() {
+void adc_repeat_read() {
 
 	for (int i = 0; i < ADC_REPEAT_TIMES; i++) {
 
