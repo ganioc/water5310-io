@@ -47,5 +47,11 @@ OTA版本，由Bootloader接收并升级, 需要修改ldscripts和vector table�
 ### watchdog
 待查, 20S
 
-###
+### Raindrop interrupt
+channel 1, PA8, EXINT9_5_IRQn
+
+channel 2, PA11, 
+
+
+
 

@@ -33,6 +33,7 @@ struct LED_STAUTS *stat = &led_status[LED4];
 
 
 enum RAINDROP_STATE  raindrop_state  = RAIN_STATE_DUMMY;
+enum RAINDROP_STATE  pulse_state = RAIN_STATE_DUMMY;
 
 
 struct BUTTON_EVENT_NAME btns[4] = {
@@ -49,7 +50,9 @@ struct BUTTON_EVENT_NAME btns[4] = {
 };
 
 extern uint32_t rain_count;
+extern uint32_t pulse_count;
 extern enum RAIN_MODE   rain_mode;
+extern enum RAIN_MODE   pulse_mode;
 
 void user_button_enable_long_click(){
 	// save to flash,eeprom
@@ -135,6 +138,28 @@ void TMR1_OVF_TMR10_IRQHandler(void)
 
     }
 
+    // pulse state
+    switch(pulse_state){
+    case RAIN_STATE_DUMMY:
+    	break;
+    case RAIN_STATE_0:
+    	pulse_state = RAIN_STATE_1;
+    	break;
+    case RAIN_STATE_1:
+
+    	sprintf(str_temp,
+    	    	"\r\n+IORAINCNT:2,%d\r\n", ++pulse_count);
+
+    	if(pulse_mode == RAIN_MODE_NOTIFY){
+    		send_to_at_queue_fromISR(str_temp, strlen(str_temp));
+    	}
+
+    	pulse_state = RAIN_STATE_DUMMY;
+    	break;
+    default:
+    	break;
+
+    }
 
 //    at32_led_check_pattern(LED4);
 

@@ -448,8 +448,8 @@ enum RAINDROP_STATE {
 
 void init_rain_gpio();
 void init_rain_exint();
-uint32_t get_rain_count();
-uint8_t get_rain_mode();
+uint32_t get_rain_count(uint8_t channel);
+uint8_t get_rain_mode(uint8_t channel);
 void set_rain_mode(uint8_t channel, uint8_t mode);
 void set_rain_count(uint8_t channel, uint32_t count);
 

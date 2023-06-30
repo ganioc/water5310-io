@@ -13,7 +13,7 @@ void cmd_iorainmode_read(){
 
 	sprintf(temp,"+IORAINMODE:%d,%d",
 				1,
-				get_rain_mode());
+				get_rain_mode(1));
 
 	send_response_str(temp);
 
@@ -73,7 +73,7 @@ void cmd_iorainread_write(char*str , int len){
 
 	sprintf(temp,"+IORAINREAD:%d,%d",
 				1,
-				get_rain_count());
+				get_rain_count(1));
 
 	send_response_str(temp);
 
