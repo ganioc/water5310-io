@@ -39,7 +39,7 @@ void cmd_iorainmode_write(char*str , int len){
 
 	print_log(str);
 
-	if(mode < 0 || mode > 2){
+	if(mode < 0 || mode > 2 || channel < 0 || channel > 2){
 		send_response_error(AT_ERROR_PARAMETER);
 	}else{
 		set_rain_mode(channel, mode);
@@ -65,7 +65,7 @@ void cmd_ioraincnt_write(char*str , int len){
 
 	print_log(str);
 
-	if(count < 0 ){
+	if(count < 0 || channel < 0 || channel > 2){
 		send_response_error(AT_ERROR_PARAMETER);
 	}else{
 		set_rain_count(channel, count);

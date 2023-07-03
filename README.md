@@ -52,6 +52,8 @@ channel 1, PA8, EXINT9_5_IRQn
 
 channel 2, PA11, 
 
+接地一次，cnt计数加2。
+
 
 
 
