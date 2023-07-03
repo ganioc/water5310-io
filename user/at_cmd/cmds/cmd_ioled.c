@@ -80,7 +80,7 @@ void cmd_ioledblink_write(char* str, int len){
 	sprintf(temp, "repeat:%d", repeatCnt);
 	print_log(temp);
 
-	if( channel != 1 || onTime <= 0 || onTime >= 10000|| offTime <=0 || offTime >= 10000 || repeatCnt <= 0){
+	if( channel != 1 || onTime <= 0 || onTime >= 10000|| offTime <=0 || offTime >= 10000 || repeatCnt < 0){
 		send_response_error(AT_ERROR_PARAMETER);
 	}else{
 		at32_led_set_blink_state(LED4, onTime,offTime, repeatCnt);
