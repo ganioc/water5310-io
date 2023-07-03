@@ -17,6 +17,12 @@ void cmd_iorainmode_read(){
 
 	send_response_str(temp);
 
+	sprintf(temp, "+IORAINMODE:%d,%d",
+				2,
+				get_rain_mode(2));
+
+	send_response_str_raw(temp);
+
 	send_response_ok();
 }
 void cmd_iorainmode_write(char*str , int len){
@@ -69,13 +75,22 @@ void cmd_ioraincnt_write(char*str , int len){
 }
 void cmd_iorainread_write(char*str , int len){
 	char temp[32];
+	uint8_t channel;
 	print_log("read rain cnt");
 
-	sprintf(temp,"+IORAINREAD:%d,%d",
-				1,
-				get_rain_count(1));
+	temp[0] = str[0];
+	temp[1] = 0;
+	channel = atoi(temp);
 
-	send_response_str(temp);
+	if(channel < 0 || channel > 2){
+		send_response_error(AT_ERROR_PARAMETER);
+	}else{
+		sprintf(temp,"+IORAINREAD:%d,%d",
+					channel,
+					get_rain_count(channel));
 
-	send_response_ok();
+		send_response_str(temp);
+
+		send_response_ok();
+	}
 }
