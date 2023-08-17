@@ -41,7 +41,7 @@ int main(void)
 {
 	uint8_t data[2];
   /* config vector table offset */
-  // nvic_vector_table_set(NVIC_VECTTAB_FLASH, 0x8000);
+  nvic_vector_table_set(NVIC_VECTTAB_FLASH, 0x8000);
 
 
   nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);

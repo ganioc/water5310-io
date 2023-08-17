@@ -12,16 +12,15 @@
 
 #include "task_conf.h"
 
-
 uint8_t at_rx_buffer[64];
 uint8_t at_rx_counter = 0;
-uint8_t  at_tx_buf[AT_RX_BUFFER_LEN];
+uint8_t at_tx_buf[AT_RX_BUFFER_LEN];
 uint16_t at_tx_buf_idx = 0, at_tx_buf_amount = 0;
 
 extern SemaphoreHandle_t xRxISRMutex, xTxISRMutex;
 
-
-void init_d1_uart() {
+void init_d1_uart()
+{
 	gpio_init_type gpio_init_struct;
 
 	/* enable the usart2 and gpio clock */
@@ -59,7 +58,6 @@ void init_d1_uart() {
 	usart_interrupt_enable(D1_UART, USART_IDLE_INT, FALSE);
 
 	usart_enable(D1_UART, TRUE);
-
 }
 
 /**
@@ -67,26 +65,31 @@ void init_d1_uart() {
  * @param  none
  * @retval none
  */
-void USART1_IRQHandler(void) {
-	if (D1_UART->ctrl1_bit.rdbfien != RESET) {
-		if (usart_flag_get(D1_UART, USART_RDBF_FLAG) != RESET) {
+void USART1_IRQHandler(void)
+{
+	if (D1_UART->ctrl1_bit.rdbfien != RESET)
+	{
+		if (usart_flag_get(D1_UART, USART_RDBF_FLAG) != RESET)
+		{
 			/* read one byte from the receive data register */
 			at_rx_buffer[at_rx_counter++] = usart_data_receive(D1_UART);
 
-//      at32_led_toggle(LED4);
+			//      at32_led_toggle(LED4);
 
 			usart_interrupt_enable(D1_UART, USART_IDLE_INT, TRUE);
 		}
-		if (usart_flag_get(D1_UART, USART_IDLEF_FLAG) != RESET) {
+		if (usart_flag_get(D1_UART, USART_IDLEF_FLAG) != RESET)
+		{
 			// copy rx buffer data out,
-//    	at32_led_toggle(LED3);
-			if(at_rx_counter > 0){
+			//    	at32_led_toggle(LED3);
+			if (at_rx_counter > 0)
+			{
 
 				update_at_rx_buf(at_rx_buffer, at_rx_counter);
 
 				xSemaphoreGiveFromISR(xRxISRMutex, NULL);
 
-			// usart2_rx_counter reset
+				// usart2_rx_counter reset
 				at_rx_counter = 0;
 			}
 
@@ -94,19 +97,19 @@ void USART1_IRQHandler(void) {
 		}
 	}
 
-  if(D1_UART->ctrl1_bit.tdbeien != RESET)
-  {
-    if(usart_flag_get(D1_UART, USART_TDBE_FLAG) != RESET)
-    {
-      /* write one byte to the transmit data register */
-      usart_data_transmit(D1_UART, at_tx_buf[at_tx_buf_idx++]);
+	if (D1_UART->ctrl1_bit.tdbeien != RESET)
+	{
+		if (usart_flag_get(D1_UART, USART_TDBE_FLAG) != RESET)
+		{
+			/* write one byte to the transmit data register */
+			usart_data_transmit(D1_UART, at_tx_buf[at_tx_buf_idx++]);
 
-      if(at_tx_buf_idx == at_tx_buf_amount)
-      {
-        /* disable the usart2 transmit interrupt */
-        usart_interrupt_enable(D1_UART, USART_TDBE_INT, FALSE);
-        xSemaphoreGiveFromISR(xTxISRMutex, NULL);
-      }
-    }
-  }
+			if (at_tx_buf_idx == at_tx_buf_amount)
+			{
+				/* disable the usart2 transmit interrupt */
+				usart_interrupt_enable(D1_UART, USART_TDBE_INT, FALSE);
+				xSemaphoreGiveFromISR(xTxISRMutex, NULL);
+			}
+		}
+	}
 }
